@@ -1,0 +1,142 @@
+# Project exclude paths
+.xml
+.iml
+.idea
+.yaml
+/Music Advisor/task/build/
+/Music Advisor/task/out/
+/Music Advisor/task/out/production/classes/
+/Problems/A fixed point/out/
+/Problems/A fixed point/out/production/classes/
+/Problems/A long process/out/
+/Problems/A long process/out/production/classes/
+/Problems/Adding N minutes/out/
+/Problems/Adding N minutes/out/production/classes/
+/Problems/An expression with large numbers/out/
+/Problems/An expression with large numbers/out/production/classes/
+/Problems/Apply function to all elements/out/
+/Problems/Apply function to all elements/out/production/classes/
+/Problems/Ascending and descending sorting/out/
+/Problems/Ascending and descending sorting/out/production/classes/
+/Problems/ASCII Art/out/
+/Problems/ASCII Art/out/production/classes/
+/Problems/Bad words detecting/out/
+/Problems/Bad words detecting/out/production/classes/
+/Problems/Breakfast Decorator/out/
+/Problems/Breakfast Decorator/out/production/classes/
+/Problems/Calculating factorials/out/
+/Problems/Calculating factorials/out/production/classes/
+/Problems/Check if a number is prime/out/
+/Problems/Check if a number is prime/out/production/classes/
+/Problems/Christmas tree/out/
+/Problems/Christmas tree/out/production/classes/
+/Problems/Coffee Decorator/out/
+/Problems/Coffee Decorator/out/production/classes/
+/Problems/Companies/out/
+/Problems/Companies/out/production/classes/
+/Problems/Convert to bytes/out/
+/Problems/Convert to bytes/out/production/classes/
+/Problems/Count words/out/
+/Problems/Count words/out/production/classes/
+/Problems/Count words without repetitions/out/
+/Problems/Count words without repetitions/out/production/classes/
+/Problems/Don't be late again/out/
+/Problems/Don't be late again/out/production/classes/
+/Problems/Even numbers go first/out/
+/Problems/Even numbers go first/out/production/classes/
+/Problems/Find the nearest number/out/
+/Problems/Find the nearest number/out/production/classes/
+/Problems/Finding a collection of elements in a sorted array/out/
+/Problems/Finding a collection of elements in a sorted array/out/production/classes/
+/Problems/Getting the max element of a stack/out/
+/Problems/Getting the max element of a stack/out/production/classes/
+/Problems/Getting the type of comparator/out/
+/Problems/Getting the type of comparator/out/production/classes/
+/Problems/Inverting streams/out/
+/Problems/Inverting streams/out/production/classes/
+/Problems/List multiplicator/out/
+/Problems/List multiplicator/out/production/classes/
+/Problems/Max-min sorting/out/
+/Problems/Max-min sorting/out/production/classes/
+/Problems/Maximum of the absolute values/out/
+/Problems/Maximum of the absolute values/out/production/classes/
+/Problems/Merging date-time instances/out/
+/Problems/Merging date-time instances/out/production/classes/
+/Problems/Multifunctional mapper/out/
+/Problems/Multifunctional mapper/out/production/classes/
+/Problems/Multiple swaps/out/
+/Problems/Multiple swaps/out/production/classes/
+/Problems/No  J/out/
+/Problems/No  J/out/production/classes/
+/Problems/Palindrome or not/out/
+/Problems/Palindrome or not/out/production/classes/
+/Problems/Photocopiers/out/
+/Problems/Photocopiers/out/production/classes/
+/Problems/Pizza Decorator/out/
+/Problems/Pizza Decorator/out/production/classes/
+/Problems/Prime numbers/out/
+/Problems/Prime numbers/out/production/classes/
+/Problems/Quality control system/out/
+/Problems/Quality control system/out/production/classes/
+/Problems/Return time without seconds/out/
+/Problems/Return time without seconds/out/production/classes/
+/Problems/Reverse input text/out/
+/Problems/Reverse input text/out/production/classes/
+/Problems/Reversed list/out/
+/Problems/Reversed list/out/production/classes/
+/Problems/Rotating table/out/
+/Problems/Rotating table/out/production/classes/
+/Problems/Safe converting/out/
+/Problems/Safe converting/out/production/classes/
+/Problems/Seconds between two time points/out/
+/Problems/Seconds between two time points/out/production/classes/
+/Problems/Seconds since start of a day/out/
+/Problems/Seconds since start of a day/out/production/classes/
+/Problems/Secret codes/out/
+/Problems/Secret codes/out/production/classes/
+/Problems/Sherlock Holmes and removing of characters/out/
+/Problems/Sherlock Holmes and removing of characters/out/production/classes/
+/Problems/Sherlock Holmes and the mystery of anagrams/out/
+/Problems/Sherlock Holmes and the mystery of anagrams/out/production/classes/
+/Problems/Sorting the absolute values/out/
+/Problems/Sorting the absolute values/out/production/classes/
+/Problems/Spell checker/out/
+/Problems/Spell checker/out/production/classes/
+/Problems/Split a list into sublists/out/
+/Problems/Split a list into sublists/out/production/classes/
+/Problems/Squares list/out/
+/Problems/Squares list/out/production/classes/
+/Problems/String concatenation/out/
+/Problems/String concatenation/out/production/classes/
+/Problems/Subtracting hours and adding minutes/out/
+/Problems/Subtracting hours and adding minutes/out/production/classes/
+/Problems/Sum of divisors/out/
+/Problems/Sum of divisors/out/production/classes/
+/Problems/The average salary/out/
+/Problems/The average salary/out/production/classes/
+/Problems/The chain of responsibility/out/
+/Problems/The chain of responsibility/out/production/classes/
+/Problems/The first day of a month or not/out/
+/Problems/The first day of a month or not/out/production/classes/
+/Problems/The intersection of time ranges/out/
+/Problems/The intersection of time ranges/out/production/classes/
+/Problems/The last day of a month/out/
+/Problems/The last day of a month/out/production/classes/
+/Problems/The n-th day from the end of a month/out/
+/Problems/The n-th day from the end of a month/out/production/classes/
+/Problems/The New Year is coming (or not)/out/
+/Problems/The New Year is coming (or not)/out/production/classes/
+/Problems/The number of operations/out/
+/Problems/The number of operations/out/production/classes/
+/Problems/The product of squares/out/
+/Problems/The product of squares/out/production/classes/
+/Problems/The smallest value/out/
+/Problems/The smallest value/out/production/classes/
+/Problems/The ten most frequent words/out/
+/Problems/The ten most frequent words/out/production/classes/
+/Problems/What is an upper bound/out/
+/Problems/What is an upper bound/out/production/classes/
+/Problems/Which brackets are balanced/out/
+/Problems/Which brackets are balanced/out/production/classes/
+/Problems/
+/Music Advisor/task/src/
