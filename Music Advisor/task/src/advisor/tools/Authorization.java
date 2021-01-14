@@ -1,5 +1,7 @@
 package advisor.tools;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
@@ -16,6 +18,7 @@ public class Authorization {
     private static final String REDIRECT_URI = "http://localhost:8080";
     private static final String GRANT_TYPE = "authorization_code";
     private static final String CLIENT_SECRET = "167c56d016cf420f8f91fee4e09e3437";
+    public static String ACCESS_TOKEN;
 
 
     public static void setServerPoint(String arg) {
@@ -31,9 +34,9 @@ public class Authorization {
         getAuthCode();
         HttpResponse<String> response = getResponseBody();
         if (response != null) {
-            System.out.println("response:");
-            System.out.println(response.body());
-            System.out.println("---SUCCESS---");
+            JsonObject jo = JsonParser.parseString(response.body()).getAsJsonObject();
+            ACCESS_TOKEN = jo.get("access_token").getAsString();
+            System.out.println("Success!");
             return true;
         }
         return false;
@@ -60,10 +63,10 @@ public class Authorization {
                 httpExchange.getResponseBody().write(res.getBytes());
                 httpExchange.getResponseBody().close();
             });
-            while(CODE == null) {
+            /*while (CODE == null) {
                 Thread.sleep(100);
-            }
-        } catch (IOException | InterruptedException e) {
+            }*/
+        } catch (IOException  e) {
             e.printStackTrace();
         }
     }

@@ -1,19 +1,23 @@
 package advisor.tools;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.*;
 
 public class Service {
+    private Map<String, String> categories = new HashMap<>();
     private boolean auth;
     private static Service service;
-    public List<String> releases = new ArrayList<>(Arrays.asList("Mountains [Sia, Diplo, Labrinth]",
-            "Runaway [Lil Peep]", "The Greatest Show [Panic! At The Disco]", "All Out Life [Slipknot]"));
-    public List<String> featured = new ArrayList<>(Arrays.asList("Mellow Morning", "Wake Up and Smell the Coffee",
-            "Monday Motivation", "Songs to Sing in the Shower"));
-    public List<Category> categories = new ArrayList<>(Arrays.asList(new Category("Top Lists"),
-            new Category("Pop"), new Category("Mood"), new Category("Latin")));
+    private static String resource = "https://api.spotify.com";
+    private final HttpClient client = HttpClient.newBuilder().build();
 
     private Service() {
     }
@@ -25,40 +29,106 @@ public class Service {
         return service;
     }
 
-    public List<String> getReleases() {
-        return releases;
+    public static void setResource(String resource) {
+        Service.resource = resource;
     }
 
-    public void setReleases(List<String> releases) {
-        this.releases = releases;
-    }
-
-    public List<String> getFeatured() {
-        return featured;
-    }
-
-    public void setFeatured(List<String> featured) {
-        this.featured = featured;
-    }
-
-    public List<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
-    }
-
-    public Category getPlaylist(String categoryName) {
-        Category fullCategory = categories.stream()
-                .filter(category -> category.getName().equals(categoryName))
-                .findFirst()
-                .orElse(null);
-        if (fullCategory != null) {
-           fullCategory.setTracks(Arrays.asList("Walk Like A Badass", "Rage Beats", "Arab Mood Booster", "Sunday Stroll"));
+    private void getNewSongs() {
+        HttpRequest request = HttpRequest.newBuilder()
+                .header("Authorization", "Bearer " + Authorization.ACCESS_TOKEN)
+                .uri(URI.create(resource + "/v1/browse/new-releases"))
+                .GET().build();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            JsonObject jo = JsonParser.parseString(response.body()).getAsJsonObject();
+            JsonArray jsonArray = jo.get("albums").getAsJsonObject()
+                    .get("items").getAsJsonArray();
+            for (JsonElement item : jsonArray) {
+                List<String> artist_names = new ArrayList<>();
+                String name = item.getAsJsonObject().get("name").getAsString().replaceAll("\"", "");
+                item.getAsJsonObject().get("artists")
+                        .getAsJsonArray()
+                        .forEach(art -> artist_names.add(art.getAsJsonObject().get("name").getAsString()));
+                String url = item.getAsJsonObject().get("external_urls").getAsJsonObject().get("spotify").getAsString();
+                System.out.println(name + "\n" + artist_names + "\n" + url + "\n");
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
         }
-        return fullCategory;
+    }
 
+    private void getFeaturedPlayList() {
+        HttpRequest request = HttpRequest.newBuilder()
+                .header("Authorization", "Bearer " + Authorization.ACCESS_TOKEN)
+                .uri(URI.create(resource + "/v1/browse/featured-playlists"))
+                .GET()
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            JsonObject jo = JsonParser.parseString(response.body()).getAsJsonObject();
+            JsonArray items = jo.get("playlists").getAsJsonObject().get("items").getAsJsonArray();
+            for (JsonElement item : items) {
+                String name = item.getAsJsonObject().get("name").getAsString().replaceAll("\"", "");
+                String url = item.getAsJsonObject().get("external_urls").getAsJsonObject().get("spotify").getAsString();
+                System.out.println(name + "\n" + url + "\n");
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void getCategories() {
+        HttpRequest request = HttpRequest.newBuilder()
+                .header("Authorization", "Bearer " + Authorization.ACCESS_TOKEN)
+                .uri(URI.create(resource + "/v1/browse/categories"))
+                .GET()
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            JsonObject jo = JsonParser.parseString(response.body()).getAsJsonObject();
+            JsonArray items = jo.get("categories").getAsJsonObject().get("items").getAsJsonArray();
+            for (JsonElement item : items) {
+                String name = item.getAsJsonObject().get("name").getAsString();
+                String key = item.getAsJsonObject().get("id").getAsString();
+                categories.put(key, name);
+            }
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getPlayLists(String category) {
+        if (categories.isEmpty()) {
+            getCategories();
+        }
+        Map.Entry<String, String> findCategory = categories.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(category))
+                .findFirst().get();
+        String category_id = findCategory.getKey();
+        HttpRequest request = HttpRequest.newBuilder()
+                .header("Authorization", "Bearer " + Authorization.ACCESS_TOKEN)
+                .uri(URI.create(resource + "/v1/browse/categories/" + category_id + "/playlists"))
+                .GET()
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            JsonObject jo = JsonParser.parseString(response.body()).getAsJsonObject();
+            System.out.println(jo);
+            if (jo.get("error") != null) {
+                System.out.println("Test unpredictable error message");
+            } else {
+                JsonArray playlists = jo.get("playlists").getAsJsonObject().get("items").getAsJsonArray();
+                for (JsonElement item : playlists) {
+                    String url = item.getAsJsonObject().get("external_urls").getAsJsonObject().get("spotify").getAsString();
+                    String name = item.getAsJsonObject().get("name").getAsString();
+                    System.out.println(name + "\n" + url + "\n");
+                }
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean showOption(Scanner scanner) {
@@ -66,40 +136,25 @@ public class Service {
         if (!auth && !input.equals("auth") && !input.equals("exit")) {
             System.out.println("Please, provide access for application.");
             return true;
-        }
-        switch (input) {
-            case "new": {
-                System.out.println("---NEW RELEASES---");
-                releases.forEach(System.out::println);
-                break;
+        } else if ("new".equals(input)) {
+            getNewSongs();
+        } else if ("featured".equals(input)) {
+            getFeaturedPlayList();
+        } else if ("categories".equals(input)) {
+            if (categories.isEmpty()) {
+                getCategories();
             }
-            case "featured": {
-                System.out.println("---FEATURED---");
-                featured.forEach(System.out::println);
-                break;
-            }
-            case "categories": {
-                System.out.println("---CATEGORIES---");
-                categories.forEach(s -> System.out.println(s.getName()));
-                break;
-            }
-            case "exit": {
-                System.out.println("---GOODBYE!---");
-                return false;
-            }
-            case "auth": {
-                Authorization authorization = new Authorization();
-                this.auth = authorization.authorize();
-                break;
-            }
-            case "mood": {
-                System.out.println("---MOOD PLAYLISTS---");
-                String[] category = input.split(" ");
-                getPlaylist(category[1]).getTracks().forEach(System.out::println);
-            }
-            default: {
-                break;
-            }
+            categories.forEach((key, value) -> System.out.println(value));
+        } else if (input.startsWith("playlists")) {
+            String category = input.substring(10);
+            getPlayLists(category);
+        } else if ("auth".equals(input)) {
+            Authorization authorization = new Authorization();
+            this.auth = authorization.authorize();
+        } else if ("exit".equals(input)) {
+            return false;
+        } else {
+            System.out.println("Unsupported command");
         }
         return true;
     }
